@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom'
 import Landing from './pages/Landing'
 import Home from './pages/Home'
 import Chat from './pages/Chat'
+import Posts from './pages/Posts'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (
@@ -12,6 +14,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Landing />} />
         <Route path='/chat' element={<Chat />} />
+        <Route path='/posts' element={<Posts />} />
         <Route path='*' element={<Home />} />
       </Routes>
     </Fragment>

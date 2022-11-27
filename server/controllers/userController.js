@@ -65,5 +65,12 @@ const authUser = asyncHandler(async (req, res) => {
     throw new Error('Invalid email or password')
 })
 
+const getTokenUser = asyncHandler(async (req, res) => {
+    if (req.user) {
+        res.status(200).json(req.user)
+    }
+    res.status(400)
+    throw new Error('User not found')
+})
 
-module.exports = { getAllUsers, registerUser, authUser }
+module.exports = { getAllUsers, registerUser, authUser, getTokenUser }

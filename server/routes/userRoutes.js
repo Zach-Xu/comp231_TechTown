@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { getAllUsers, registerUser, authUser } = require('../controllers/userController')
+const { getAllUsers, registerUser, authUser, getTokenUser } = require('../controllers/userController')
+const { protect } = require('../middlewares/authMiddleware')
 
 // @route   GET api/users
 // @desc    Get all users
@@ -16,5 +17,10 @@ router.post('/', registerUser)
 // @desc    Login
 // @access  Public
 router.post('/login', authUser)
+
+// @route   GET api/users/token
+// @desc    return the user corresponding to the token
+// @access  Private
+router.get('/tokenuser', protect, getTokenUser)
 
 module.exports = router

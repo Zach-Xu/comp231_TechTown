@@ -159,12 +159,12 @@
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   margin-top: 6rem;
   margin-bottom: 3rem;
   padding: 0 2rem;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .text-primary {
@@ -451,7 +451,7 @@ i {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.3rem 2.4rem;
+  padding: 0.2rem 2.4rem;
   font-family: "Raleway", sans-serif;
   opacity: 0.9;
   position: fixed;
@@ -467,7 +467,7 @@ i {
 }
 
 .navbar ul li {
-  margin: 1rem;
+  margin: 0.6rem 1rem;
 }
 
 .navbar a {

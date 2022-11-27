@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEf, useEffectfect } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { baseURL } from '../../config/env'
+import { ToastContainer, toast } from 'react-toastify';
+import { GlobalState } from '../../context/GlobalProvider'
 
 export default function Signup() {
     const [user, setUser] = useState({
@@ -12,10 +14,20 @@ export default function Signup() {
         password: ''
     })
 
+
     const signup = async (e) => {
         e.preventDefault()
-        const { data } = await axios.post(`${baseURL}/api/users`, user)
-        console.log(data);
+        try {
+            const { data } = await axios.post(`${baseURL}/api/users`, user)
+            localStorage.setItem('techTownToken', data.token)
+            toast.success('Register successfully', {
+                position: toast.POSITION.TOP_CENTER
+            })
+        } catch (error) {
+            toast.error('Fail to sign up', {
+                position: toast.POSITION.TOP_CENTER
+            })
+        }
     }
 
     return (
@@ -43,6 +55,7 @@ export default function Signup() {
                 onChange={e => { setUser({ ...user, password: e.target.value }) }}
             />
             <Button type="submit" variant="contained" sx={{ mt: '10px', fontSize: '18px' }}>Sign Up</Button>
+            <ToastContainer />
         </Box>
     )
 }

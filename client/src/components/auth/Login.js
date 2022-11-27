@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { baseURL } from '../../config/env'
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function Login() {
 
@@ -14,9 +15,18 @@ export default function Login() {
 
     const login = async (e) => {
         e.preventDefault()
-        e.preventDefault()
-        const { data } = await axios.post(`${baseURL}/api/users/login`, user)
-        console.log(data);
+        try {
+            const { data } = await axios.post(`${baseURL}/api/users/login`, user)
+            localStorage.setItem('techTownToken', data.token)
+            toast.success('Login successfully', {
+                position: toast.POSITION.TOP_CENTER
+            })
+        } catch (error) {
+            toast.error('Invalid email or password', {
+                position: toast.POSITION.TOP_CENTER
+            })
+        }
+
     }
 
     return (
@@ -38,6 +48,7 @@ export default function Login() {
                 onChange={e => { setUser({ ...user, password: e.target.value }) }}
             />
             <Button type="submit" variant="contained" sx={{ mt: '10px', fontSize: '18px' }}>Log In</Button>
+            <ToastContainer />
         </Box>
     )
 }
