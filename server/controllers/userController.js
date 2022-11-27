@@ -23,14 +23,17 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('Email already been registered')
     }
 
-    const user = await User.create({
+    let user = await User.create({
         username,
         email,
         password,
         avatar
     })
 
+    user = user.toObject()
+
     let token = generateToken(user._id)
+
     user.token = token
 
     if (user) {
@@ -48,11 +51,14 @@ const authUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ email })
 
     if (userExists && userExists.matchPassword(password)) {
-        let token = generateToken(user._id)
-        userExists.token = token
 
-        delete userExists.password
-        return res.json(userExists)
+        const user = userExists.toObject()
+
+        let token = generateToken(user._id)
+        user.token = token
+
+        delete user.password
+        return res.json(user)
     }
 
     res.status(401)

@@ -35,7 +35,7 @@ userSchema.methods.matchPassword = (password) => {
 }
 
 userSchema.pre('save', (next) => {
-    if (!this.isModified()) {
+    if (!this.isModified) {
         next()
     }
 
