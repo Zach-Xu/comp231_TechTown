@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from 'react'
+import NavBar from './components/miscellaneous/NavBar'
+import { Routes, Route } from 'react-router-dom'
+import Landing from './pages/Landing'
+import Home from './pages/Home'
+import Chat from './pages/Chat'
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Fragment>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        <Route path='/chat' element={<Chat />} />
+        <Route path='*' element={<Home />} />
+      </Routes>
+    </Fragment>
+  )
 }
-
-export default App;
