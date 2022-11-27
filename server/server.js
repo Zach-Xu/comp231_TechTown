@@ -23,7 +23,9 @@ app.get('/', (req, res) => {
 //import routes
 
 const userRouter = require('./routes/userRoutes')
+const postRouter = require('./routes/postRoutes')
 app.use('/api/users', userRouter)
+app.use('/api/posts', postRouter)
 
 const PORT = process.env.PORT || 5000
 

@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
-const { sessionSecret, expiresIn } = require('../config/env/development')
+const { tokenSecret, expiresIn } = require('../config/env/development')
 
 const generateToken = (userId) => {
-    return jwt.sign({ userId }, sessionSecret, {
+    return jwt.sign({ userId }, tokenSecret, {
         expiresIn
     })
 }
