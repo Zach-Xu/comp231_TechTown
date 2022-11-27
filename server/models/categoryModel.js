@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const categorySchema = Schema({
-    type: {
+    usage: {
         type: String,
-        enum: ['front-end', 'back-end'],
+        enum: ['front-end', 'back-end', 'full-stack'],
         default: 'back-end'
     },
     name: {

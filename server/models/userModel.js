@@ -30,17 +30,17 @@ const userSchema = Schema({
     }
 )
 
-userSchema.methods.matchPassword = (password) => {
+userSchema.methods.matchPassword = function (password) {
     return bcrypt.compareSync(password, this.password)
 }
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', async function (next) {
     if (!this.isModified) {
         next()
     }
 
-    const salt = bcrypt.genSaltSync(10)
-    this.password = bcrypt.hashSync(this.password, salt)
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
 })
 
 const User = mongoose.model('User', userSchema)
