@@ -23,6 +23,11 @@ const postSchema = Schema({
         type: Date,
         default: Date.now
     },
+    tags: [{
+        name: {
+            type: String
+        }
+    }],
     comments: [{
         user: {
             type: Schema.Types.ObjectId,
