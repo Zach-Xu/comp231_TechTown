@@ -28,8 +28,8 @@ export default function NavBar() {
                     <li><Link to="/posts">Posts</Link></li>
                     {user ?
                         <>
-                            <li><Link to="/login">Ask Question</Link></li>
-                            <li><Link to="/">Ask Question</Link></li>
+                            <li><Link to="/post">Ask Question</Link></li>
+                            <li><span>{`Welcome, ${user.username}`}</span></li>
                             <li onClick={logout}>Logout</li>
                         </>
                         :

@@ -16,8 +16,9 @@ export default function GlobalProvider({ children }) {
         try {
             const { data } = await axios.get(`${baseURL}/api/users/tokenuser`, config)
             setUser(data)
+            navigate('/posts')
         } catch (error) {
-            navigate('/')
+            setUser()
         }
 
     }
@@ -26,9 +27,6 @@ export default function GlobalProvider({ children }) {
         const token = localStorage.getItem('techTownToken')
         if (token) {
             getUser(token)
-        } else {
-            setUser()
-            navigate('/')
         }
     }, [])
 
