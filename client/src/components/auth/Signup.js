@@ -28,7 +28,7 @@ export default function Signup() {
                 position: toast.POSITION.TOP_CENTER
             })
             setAuth(data)
-            navigate('/posts')
+            navigate('/questions')
 
         } catch (error) {
             toast.error('Fail to sign up', {

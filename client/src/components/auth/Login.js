@@ -28,7 +28,7 @@ export default function Login() {
                 position: toast.POSITION.TOP_CENTER
             })
             setAuth(data)
-            navigate('/posts')
+            navigate('/questions')
         } catch (error) {
             toast.error('Invalid email or password', {
                 position: toast.POSITION.TOP_CENTER

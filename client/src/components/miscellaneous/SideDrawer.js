@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
@@ -19,7 +20,8 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-
+import GroupsIcon from '@mui/icons-material/Groups';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 
 const drawerWidth = 240;
@@ -43,18 +45,25 @@ export default function SideDrawer({ open, handleDrawerClose }) {
     };
 
     const [expandQ, setExpandQ] = useState(true)
-
     const expandQuestions = () => {
         setExpandQ(!expandQ)
     }
 
     const [expandF, setExpandF] = useState(false)
-
     const expandFriends = () => {
         setExpandF(!expandF)
     }
 
+    const [expandG, setExpandG] = useState(false)
+
+    const expandGroups = () => {
+        setExpandF(!expandG)
+    }
+
+
     const [friends, setFriends] = useState([])
+
+    const [groups, setGroups] = useState([])
 
 
     return (
@@ -100,7 +109,10 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                             <ListItemIcon>
                                 <LiveHelpIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Ask Question" />
+                            <Link to='/question'>
+                                <ListItemText primary="Ask Question" />
+                            </Link>
+
                         </ListItemButton>
                     </List>
                     <List component="div" disablePadding>
@@ -112,6 +124,14 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                         </ListItemButton>
                     </List>
                 </Collapse>
+                {/* Profile */}
+                <ListItemButton >
+                    <ListItemIcon>
+                        <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Profile" />
+                </ListItemButton>
+
 
 
                 {/* Friends */}
@@ -144,7 +164,38 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                         }
 
                     </List>
+                </Collapse>
 
+                {/* Group chats */}
+                <ListItemButton onClick={expandGroups}>
+                    <ListItemIcon>
+                        <GroupsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Groups" />
+                    {expandF ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                {/* Friend List */}
+                <Collapse in={expandF} timeout="auto" unmountOnExit>
+
+                    <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }}>
+                            <ListItemIcon>
+                                <PersonAddIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Create a group" />
+                        </ListItemButton>
+                        {
+                            groups.length > 0 && groups.map(friend => (
+                                <ListItemButton sx={{ pl: 4 }}>
+                                    <ListItemIcon>
+                                        <StarBorder />
+                                    </ListItemIcon>
+                                    <ListItemText primary={groups.name} />
+                                </ListItemButton>
+                            ))
+                        }
+
+                    </List>
                 </Collapse>
 
             </List>

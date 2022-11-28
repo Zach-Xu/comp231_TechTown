@@ -17,20 +17,17 @@ export default function Auth() {
     };
 
     return (
-        <div className="container">
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <TabContext value={value}>
-                    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example" centered>
-                            <Tab label="Login" value="1" />
-                            <Tab label="Signup" value="2" />
-                        </TabList>
-                    </Box>
-                    <TabPanel value="1"><Login /></TabPanel>
-                    <TabPanel value="2"><Signup /></TabPanel>
-                </TabContext>
-            </Box>
-        </div>
-
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <TabContext value={value}>
+                <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <TabList onChange={handleChange} aria-label="lab API tabs example" centered>
+                        <Tab label="Login" value="1" />
+                        <Tab label="Signup" value="2" />
+                    </TabList>
+                </Box>
+                <TabPanel value="1"><Login /></TabPanel>
+                <TabPanel value="2"><Signup /></TabPanel>
+            </TabContext>
+        </Box>
     )
 }

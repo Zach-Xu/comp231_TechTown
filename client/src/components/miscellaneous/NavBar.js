@@ -42,10 +42,10 @@ export default function NavBar({ handleDrawerOpen, open }) {
                 </h2>
             </div>
             <ul>
-                <li><Link to='/posts'>Posts</Link></li>
+                <li><Link to='/questions'>Posts</Link></li>
                 {user ?
                     <>
-                        <li><Link to="/post">Ask Question</Link></li>
+                        <li><Link to="/question">Ask Question</Link></li>
                         <li><span>{`Welcome, ${user.username}`}</span></li>
                         <li onClick={logout} className="btn-li">Logout</li>
                     </>

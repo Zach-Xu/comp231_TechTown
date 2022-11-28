@@ -8,8 +8,8 @@ import { Routes, Route } from 'react-router-dom'
 import SideDrawer from '../components/miscellaneous/SideDrawer'
 import NavBar from '../components/miscellaneous/NavBar';
 import Chat from '../pages/Chat'
-import Posts from '../pages/Posts'
-import Post from '../pages/Post'
+import Questions from '../pages/Question/Questions'
+import Question from '../pages/Question/Question'
 import Auth from '../pages/Auth'
 import Landing from '../pages/Landing'
 
@@ -18,12 +18,13 @@ import { GlobalState } from '../context/GlobalProvider'
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
+    ({ theme, open, user }) => ({
         flexGrow: 1,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+        marginLeft: user ? `-${drawerWidth}px` : '0px',
         ...(open && {
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.easeOut,
@@ -51,6 +52,15 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+}));
+
 export default function Home() {
     const [open, setOpen] = useState(false);
 
@@ -75,12 +85,13 @@ export default function Home() {
             {
                 user && <SideDrawer open={open} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose} />
             }
-            <Main open={open}>
+            <Main open={open} user={user}>
+                <DrawerHeader />
                 <Routes>
                     <Route path='/' element={<Landing />} />
                     <Route path='/chat' element={<Chat />} />
-                    <Route path='/posts' element={<Posts />} />
-                    <Route path='/post' element={<Post />} />
+                    <Route path='/questions' element={<Questions />} />
+                    <Route path='/question' element={<Question />} />
                     <Route path='*' element={<Auth />} />
                 </Routes>
             </Main>
