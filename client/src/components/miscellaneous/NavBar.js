@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 import { GlobalState } from '../../context/GlobalProvider'
 import { useNavigate } from 'react-router-dom'
 
-export default function NavBar() {
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from "@mui/material/Toolbar";
+
+export default function NavBar({ handleDrawerOpen, open }) {
 
     const { user, setUser } = GlobalState()
 
@@ -11,34 +15,44 @@ export default function NavBar() {
 
     const logout = () => {
         localStorage.removeItem('techTownToken')
+        setUser()
         navigate('/')
     }
 
     console.log('contextuser', user);
 
     return (
-        <Fragment>
-            <nav className="navbar bg-dark">
-                <h2>
-                    <Link to='/'>
-                        COMP231 Tech Town
-                    </Link>
-                </h2>
-                <ul>
-                    <li><Link to="/posts">Posts</Link></li>
-                    {user ?
-                        <>
-                            <li><Link to="/post">Ask Question</Link></li>
-                            <li><span>{`Welcome, ${user.username}`}</span></li>
-                            <li onClick={logout}>Logout</li>
-                        </>
-                        :
-                        <>
-                            <li><Link to="/signup">Register</Link></li>
-                            <li><Link to="/login">Login</Link></li>
-                        </>}
-                </ul>
-            </nav >
-        </Fragment >
+        <Toolbar className='navbar bg-dark' sx={{ d: 'flex' }}>
+            {
+                user && <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                >
+                    <MenuIcon />
+                </IconButton>
+            }
+            <h2>
+                <Link to={user ? '/posts' : '/'}>
+                    COMP231 Tech Town
+                </Link>
+            </h2>
+            <ul>
+                <li><Link to='/posts'>Posts</Link></li>
+                {user ?
+                    <>
+                        <li><Link to="/post">Ask Question</Link></li>
+                        <li><span>{`Welcome, ${user.username}`}</span></li>
+                        <li onClick={logout} className="btn-li">Logout</li>
+                    </>
+                    :
+                    <>
+                        <li><Link to="/signup">Register</Link></li>
+                        <li><Link to="/login">Login</Link></li>
+                    </>}
+            </ul>
+        </Toolbar>
     )
 }

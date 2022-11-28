@@ -458,7 +458,6 @@ i {
   top: 0;
   width: 100%;
   z-index: 2;
-  border-bottom: 1px solid #17a2b8;
 }
 
 .navbar ul {
@@ -598,6 +597,10 @@ i {
 
 .post img {
   padding: 0 1rem;
+}
+
+.btn-li:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 700px) {

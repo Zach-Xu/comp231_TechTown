@@ -1,36 +1,89 @@
-import React, { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Signup from '../components/auth/Signup'
-import Login from '../components/auth/Login'
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from "@mui/material/Toolbar";
+import { Routes, Route } from 'react-router-dom'
+import SideDrawer from '../components/miscellaneous/SideDrawer'
+import NavBar from '../components/miscellaneous/NavBar';
+import Chat from '../pages/Chat'
+import Posts from '../pages/Posts'
+import Post from '../pages/Post'
+import Auth from '../pages/Auth'
+import Landing from '../pages/Landing'
+
+import { GlobalState } from '../context/GlobalProvider'
+
+const drawerWidth = 240;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+        flexGrow: 1,
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        ...(open && {
+            transition: theme.transitions.create('margin', {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+            marginLeft: 0,
+        }),
+    }),
+);
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+    transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
 
 export default function Home() {
+    const [open, setOpen] = useState(false);
 
-    const [value, setValue] = useState("1");
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleDrawerOpen = () => {
+        setOpen(true);
     };
 
-    return (
-        <div className="container">
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <TabContext value={value}>
-                    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example" centered>
-                            <Tab label="Login" value="1" />
-                            <Tab label="Signup" value="2" />
-                        </TabList>
-                    </Box>
-                    <TabPanel value="1"><Login /></TabPanel>
-                    <TabPanel value="2"><Signup /></TabPanel>
-                </TabContext>
-            </Box>
-        </div>
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
-    )
+    const { user } = GlobalState()
+
+    return (
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <AppBar position="fixed" open={open} sx={{ bgcolor: '#343a40', borderBottom: '1px solid #17a2b8' }}>
+                <Toolbar>
+                    <NavBar handleDrawerOpen={handleDrawerOpen} open={open} />
+                </Toolbar>
+            </AppBar>
+            {
+                user && <SideDrawer open={open} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose} />
+            }
+            <Main open={open}>
+                <Routes>
+                    <Route path='/' element={<Landing />} />
+                    <Route path='/chat' element={<Chat />} />
+                    <Route path='/posts' element={<Posts />} />
+                    <Route path='/post' element={<Post />} />
+                    <Route path='*' element={<Auth />} />
+                </Routes>
+            </Main>
+        </Box>
+    );
 }
