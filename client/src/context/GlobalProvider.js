@@ -14,7 +14,7 @@ export default function GlobalProvider({ children }) {
     const getUser = async (token) => {
         const config = getAuthConfig(token)
         try {
-            const { data } = await axios.get(`${baseURL}/api/users/token`, config)
+            const { data } = await axios.get(`${baseURL}/api/users/tokenuser`, config)
             setUser(data)
         } catch (error) {
             navigate('/')
@@ -27,6 +27,7 @@ export default function GlobalProvider({ children }) {
         if (token) {
             getUser(token)
         } else {
+            setUser()
             navigate('/')
         }
     }, [])

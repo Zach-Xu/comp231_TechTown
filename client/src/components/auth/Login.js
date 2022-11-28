@@ -4,7 +4,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { baseURL } from '../../config/env'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'
+import { GlobalState } from '../../context/GlobalProvider'
 
 export default function Login() {
 
@@ -12,6 +14,10 @@ export default function Login() {
         email: '',
         password: ''
     })
+
+    const { setUser: setAuth } = GlobalState()
+
+    const navigate = useNavigate()
 
     const login = async (e) => {
         e.preventDefault()
@@ -21,6 +27,8 @@ export default function Login() {
             toast.success('Login successfully', {
                 position: toast.POSITION.TOP_CENTER
             })
+            setAuth(data)
+            navigate('/posts')
         } catch (error) {
             toast.error('Invalid email or password', {
                 position: toast.POSITION.TOP_CENTER
@@ -48,7 +56,6 @@ export default function Login() {
                 onChange={e => { setUser({ ...user, password: e.target.value }) }}
             />
             <Button type="submit" variant="contained" sx={{ mt: '10px', fontSize: '18px' }}>Log In</Button>
-            <ToastContainer />
         </Box>
     )
 }

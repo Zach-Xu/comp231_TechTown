@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Chat from './pages/Chat'
 import Posts from './pages/Posts'
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path='/posts' element={<Posts />} />
         <Route path='*' element={<Home />} />
       </Routes>
+      <ToastContainer />
     </Fragment>
   )
 }
