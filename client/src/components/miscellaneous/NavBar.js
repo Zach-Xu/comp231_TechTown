@@ -22,23 +22,25 @@ export default function NavBar({ handleDrawerOpen, open }) {
     console.log('contextuser', user);
 
     return (
-        <Toolbar className='navbar bg-dark' sx={{ d: 'flex' }}>
-            {
-                user && <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    sx={{ mr: 2, ...(open && { display: 'none' }) }}
-                >
-                    <MenuIcon />
-                </IconButton>
-            }
-            <h2>
-                <Link to={user ? '/posts' : '/'}>
-                    COMP231 Tech Town
-                </Link>
-            </h2>
+        <Toolbar className='navbar bg-dark' sx={{ d: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                {
+                    user && <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{ mr: 2, ...(open && { display: 'none' }) }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                }
+                <h2>
+                    <Link to={user ? '/posts' : '/'}>
+                        COMP231 Tech Town
+                    </Link>
+                </h2>
+            </div>
             <ul>
                 <li><Link to='/posts'>Posts</Link></li>
                 {user ?

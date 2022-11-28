@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 
 
 const drawerWidth = 240;
@@ -21,6 +36,26 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function SideDrawer({ open, handleDrawerClose }) {
 
     const theme = useTheme();
+
+
+    const handleClick = () => {
+
+    };
+
+    const [expandQ, setExpandQ] = useState(true)
+
+    const expandQuestions = () => {
+        setExpandQ(!expandQ)
+    }
+
+    const [expandF, setExpandF] = useState(false)
+
+    const expandFriends = () => {
+        setExpandF(!expandF)
+    }
+
+    const [friends, setFriends] = useState([])
+
 
     return (
         <Drawer
@@ -45,7 +80,74 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                     )}
                 </IconButton>
             </DrawerHeader>
-            123
+            <List
+                sx={{ width: '100%', maxWidth: 240, bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+            >
+
+                {/* Questions */}
+                <ListItemButton onClick={expandQuestions}>
+                    <ListItemIcon>
+                        <HelpOutlineIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Questions" />
+                    {expandQ ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={expandQ} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }}>
+                            <ListItemIcon>
+                                <LiveHelpIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Ask Question" />
+                        </ListItemButton>
+                    </List>
+                    <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }}>
+                            <ListItemIcon>
+                                <StarBorder />
+                            </ListItemIcon>
+                            <ListItemText primary="My Questions" />
+                        </ListItemButton>
+                    </List>
+                </Collapse>
+
+
+                {/* Friends */}
+                <ListItemButton onClick={expandFriends}>
+                    <ListItemIcon>
+                        <PeopleAltIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Friends" />
+                    {expandF ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                {/* Friend List */}
+                <Collapse in={expandF} timeout="auto" unmountOnExit>
+
+                    <List component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }}>
+                            <ListItemIcon>
+                                <PersonAddIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Add a friend" />
+                        </ListItemButton>
+                        {
+                            friends.length > 0 && friends.map(friend => (
+                                <ListItemButton sx={{ pl: 4 }}>
+                                    <ListItemIcon>
+                                        <StarBorder />
+                                    </ListItemIcon>
+                                    <ListItemText primary={friend.username} />
+                                </ListItemButton>
+                            ))
+                        }
+
+                    </List>
+
+                </Collapse>
+
+            </List>
         </Drawer>
     )
 }
