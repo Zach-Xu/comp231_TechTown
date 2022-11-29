@@ -94,6 +94,13 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
             >
+                {/* Profile */}
+                <ListItemButton >
+                    <ListItemIcon>
+                        <AccountBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Profile" />
+                </ListItemButton>
 
                 {/* Questions */}
                 <ListItemButton onClick={expandQuestions}>
@@ -124,14 +131,6 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                         </ListItemButton>
                     </List>
                 </Collapse>
-                {/* Profile */}
-                <ListItemButton >
-                    <ListItemIcon>
-                        <AccountBoxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Profile" />
-                </ListItemButton>
-
 
 
                 {/* Friends */}

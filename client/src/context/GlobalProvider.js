@@ -16,7 +16,7 @@ export default function GlobalProvider({ children }) {
         try {
             const { data } = await axios.get(`${baseURL}/api/users/tokenuser`, config)
             setUser(data)
-            navigate('/posts')
+            navigate('/questions    ')
         } catch (error) {
             setUser()
         }
