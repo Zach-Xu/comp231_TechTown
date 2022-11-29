@@ -24,8 +24,10 @@ app.get('/', (req, res) => {
 
 const userRouter = require('./routes/userRoutes')
 const postRouter = require('./routes/postRoutes')
+const categoryRouter = require('./routes/categoryRoutes')
 app.use('/api/users', userRouter)
 app.use('/api/posts', postRouter)
+app.use('/api/categories', categoryRouter)
 
 const PORT = process.env.PORT || 5000
 

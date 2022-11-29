@@ -127,7 +127,9 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                             <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon>
-                            <ListItemText primary="My Questions" />
+                            <Link to='/myquestions'>
+                                <ListItemText primary="My Questions" />
+                            </Link>
                         </ListItemButton>
                     </List>
                 </Collapse>
