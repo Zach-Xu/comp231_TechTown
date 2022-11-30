@@ -13,6 +13,7 @@ import Question from '../pages/Question/Question'
 import Auth from '../pages/Auth'
 import Landing from '../pages/Landing'
 import MyQuestions from '../pages/Question/MyQuestions'
+import AddFriend from './friend/AddFriend';
 
 import { GlobalState } from '../context/GlobalProvider'
 
@@ -94,6 +95,7 @@ export default function Home() {
                     <Route path='/questions' element={<Questions />} />
                     <Route path='/question' element={<Question />} />
                     <Route path='/myquestions' element={<MyQuestions />} />
+                    <Route path='/addfriend' element={<AddFriend />} />
                     <Route path='*' element={<Auth />} />
                 </Routes>
             </Main>

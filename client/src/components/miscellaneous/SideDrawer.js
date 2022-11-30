@@ -151,7 +151,8 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                             <ListItemIcon>
                                 <PersonAddIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Add a friend" />
+                            <Link to='/addfriend'> <ListItemText primary="Add a friend" /></Link>
+
                         </ListItemButton>
                         {
                             friends.length > 0 && friends.map(friend => (
