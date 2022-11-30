@@ -495,6 +495,13 @@ i {
   width: 80%;
 }
 
+.messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
 .profile {
   display: grid;
   grid-template-columns: 2fr 4fr 2fr;

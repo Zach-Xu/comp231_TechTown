@@ -4,33 +4,25 @@ import { useParams } from 'react-router-dom'
 import { baseURL } from '../config/env'
 import { getAuthConfig } from '../utils/utlis'
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import ScrollableChat from '../components/miscellaneous/ScrollableChat'
 import { TextField, Button } from '@mui/material/';
-import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify'
+import SendIcon from '@mui/icons-material/Send';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 export default function Chat() {
+    const token = localStorage.getItem('techTownToken')
+    const config = getAuthConfig(token)
 
     const { chatId } = useParams()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
 
     useEffect(() => {
-        console.log('chatId', chatId);
         getMessages()
     }, [chatId])
 
     const getMessages = async () => {
-        const token = localStorage.getItem('techTownToken')
-        const config = getAuthConfig(token)
         try {
             const { data } = await axios.get(`${baseURL}/api/messages/${chatId}`, config)
             setMessages(data)
@@ -47,37 +39,65 @@ export default function Chat() {
         // typing indicator logic
     }
 
-    const sendMessage = (e) => {
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && message.trim()) {
+            sendMessage()
+        }
+    }
 
+    const sendMessage = async () => {
+        try {
+            const { data } = await axios.post(`${baseURL}/api/messages`, {
+                content: message,
+                chatId
+            }, config)
+            setMessage('')
+            setMessages([...messages, data])
+        } catch (error) {
+            toast.error('Fail to send the message, try again', {
+                position: toast.POSITION.BOTTOM_CENTER
+            })
+        }
     }
 
 
     return (
-        <Box sx={{ width: '100%', p: '2rem 10rem' }}>
+        <Box sx={{ width: '100%', p: '2rem 6rem' }}>
             <Box component="form" sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
+                width: '100%',
                 height: '82vh',
                 bgcolor: '#efeae2',
-                borderRadius: '10px'
+                borderRadius: '10px',
+                overflowY: 'hidden'
             }}
-                onKeyDown={e => sendMessage(e)}
+                onKeyDown={handleKeyDown}
             >
+                {
+                    messages.length > 0 &&
+                    <div className="messages">
+                        <ScrollableChat messages={messages} />
+                    </div>
+                }
                 <Box sx={{ width: '100%', p: '1rem', display: 'flex', alignItems: 'center' }}>
                     <TextField
                         id="outlined-multiline-flexible"
-                        label="Enter a message.."
+                        label="Enter a message..."
                         multiline
                         maxRows={4}
                         value={message}
                         onChange={typingHandler}
                         sx={{ flexGrow: 1 }}
                     />
-                    <Button variant="contained" disabled={message === '' ? true : false} sx={{ width: '50px', height: '50px', ml: '0.4rem' }}>Send</Button>
+                    <Button variant="contained"
+                        disabled={message === '' ? true : false}
+                        sx={{ width: '50px', height: '50px', ml: '0.4rem' }}
+                        onClick={sendMessage}>
+                        <SendIcon />
+                    </Button>
                 </Box>
-
-
             </Box>
         </Box>
     )

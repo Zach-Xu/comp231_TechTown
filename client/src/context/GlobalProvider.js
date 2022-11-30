@@ -6,7 +6,10 @@ import { baseURL } from '../config/env'
 
 const GlobalContext = createContext()
 
+
 export default function GlobalProvider({ children }) {
+
+    const token = localStorage.getItem('techTownToken')
     const [user, setUser] = useState()
     const [friends, setFriends] = useState([])
 
@@ -28,6 +31,7 @@ export default function GlobalProvider({ children }) {
         const config = getAuthConfig(token)
         try {
             const { data } = await axios.get(`${baseURL}/api/chats/oneonone`, config)
+            console.log('frends', data);
             setFriends(data)
         } catch (error) {
             setFriends([])
@@ -35,12 +39,11 @@ export default function GlobalProvider({ children }) {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('techTownToken')
         if (token) {
             getUser(token)
             getFriends(token)
         }
-    }, [])
+    }, [token])
 
     return (
         <GlobalContext.Provider
