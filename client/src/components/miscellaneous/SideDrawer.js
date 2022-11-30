@@ -65,8 +65,6 @@ export default function SideDrawer({ open, handleDrawerClose }) {
 
     const [groups, setGroups] = useState([])
 
-    console.log('friends', friends);
-
     return (
         <Drawer
             sx={{
@@ -156,12 +154,14 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                         </ListItemButton>
                         {
                             user && friends.length > 0 && friends.map(friend => (
-                                <ListItemButton sx={{ pl: 4 }} key={friend._id}>
-                                    <ListItemIcon>
-                                        <MyAvatar username={getFriend(user, friend.users).username} width='30px' height='30px' />
-                                    </ListItemIcon>
-                                    <ListItemText primary={getFriend(user, friend.users).username} />
-                                </ListItemButton>
+                                <Link to={`/chat/${friend._id}`} key={friend._id}>
+                                    <ListItemButton sx={{ pl: 4 }} >
+                                        <ListItemIcon>
+                                            <MyAvatar username={getFriend(user, friend.users).username} width='30px' height='30px' />
+                                        </ListItemIcon>
+                                        <ListItemText primary={getFriend(user, friend.users).username} />
+                                    </ListItemButton>
+                                </Link>
                             ))
                         }
 

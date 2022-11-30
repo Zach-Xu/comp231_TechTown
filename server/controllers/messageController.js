@@ -5,6 +5,13 @@ const Chat = require('../models/chatModel')
 
 const getAllMessages = asyncHandler(async (req, res) => {
     const { chatId } = req.params
+    //  
+    const chat = await Chat.findById(chatId).populate('users', '-password')
+
+    if (!chat.users.find(user => user._id.equals(req.user._id))) {
+        throw new Error('Not the participants of the chat')
+    }
+
     const messages = await Message.find({ chat: chatId })
         .populate('sender', '-password')
         .populate('receiver', '-password')

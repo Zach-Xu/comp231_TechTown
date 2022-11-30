@@ -12,4 +12,5 @@ router.get('/', getAllCategories)
 // @access  Public for now (admin in the future)
 router.post('/', createCategory)
 
+
 module.exports = router

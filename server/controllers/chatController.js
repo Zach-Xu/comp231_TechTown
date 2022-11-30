@@ -4,7 +4,6 @@ const User = require('../models/userModel')
 
 
 const getOneOnOneChats = asyncHandler(async (req, res) => {
-    console.log('req user', req.user);
     let chats
     const { userId } = req.query
     // get all one on one chats for a user

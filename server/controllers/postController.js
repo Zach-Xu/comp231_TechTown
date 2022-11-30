@@ -42,7 +42,7 @@ const updateContentAndCategory = asyncHandler(async (req, res) => {
         throw new Error('Post not found')
     }
 
-    if (req.user._id !== post.user) {
+    if (!req.user._id.equals(post.user)) {
         res.status(403)
         throw new Error('Not the author of the post')
     }
@@ -63,7 +63,7 @@ const deletePost = asyncHandler(async (req, res) => {
         throw new Error('Post not found')
     }
 
-    if (req.user._id !== post.user) {
+    if (!req.user._id.equals(post.user)) {
         res.status(403)
         throw new Error('Not the author of the post')
     }
