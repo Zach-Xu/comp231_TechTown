@@ -5,7 +5,7 @@ import { baseURL } from '../config/env'
 import { getAuthConfig } from '../utils/utlis'
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { TextField } from '@mui/material/';
+import { TextField, Button } from '@mui/material/';
 import { styled } from '@mui/material/styles';
 import { toast } from 'react-toastify'
 
@@ -55,23 +55,28 @@ export default function Chat() {
     return (
         <Box sx={{ width: '100%', p: '2rem 10rem' }}>
             <Box component="form" sx={{
-                d: 'flex',
+                display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
                 height: '82vh',
-                bgcolor: '#efeae2'
+                bgcolor: '#efeae2',
+                borderRadius: '10px'
             }}
                 onKeyDown={e => sendMessage(e)}
             >
-                <TextField
-                    id="outlined-multiline-flexible"
-                    label="Enter a message.."
-                    multiline
-                    maxRows={4}
-                    value={message}
-                    onChange={typingHandler}
-                    sx={{ width: '100%' }}
-                />
+                <Box sx={{ width: '100%', p: '1rem', display: 'flex', alignItems: 'center' }}>
+                    <TextField
+                        id="outlined-multiline-flexible"
+                        label="Enter a message.."
+                        multiline
+                        maxRows={4}
+                        value={message}
+                        onChange={typingHandler}
+                        sx={{ flexGrow: 1 }}
+                    />
+                    <Button variant="contained" disabled={message === '' ? true : false} sx={{ width: '50px', height: '50px', ml: '0.4rem' }}>Send</Button>
+                </Box>
+
 
             </Box>
         </Box>
