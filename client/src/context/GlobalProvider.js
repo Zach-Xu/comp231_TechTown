@@ -8,6 +8,7 @@ const GlobalContext = createContext()
 
 export default function GlobalProvider({ children }) {
     const [user, setUser] = useState()
+    const [friends, setFriends] = useState([])
 
     const navigate = useNavigate()
 
@@ -20,19 +21,29 @@ export default function GlobalProvider({ children }) {
         } catch (error) {
             setUser()
         }
+    }
 
+    const getFriends = async (token) => {
+        const config = getAuthConfig(token)
+        try {
+            const { data } = await axios.get(`${baseURL}/api/chats/oneonone`, config)
+            setFriends(data)
+        } catch (error) {
+            setFriends([])
+        }
     }
 
     useEffect(() => {
         const token = localStorage.getItem('techTownToken')
         if (token) {
             getUser(token)
+            getFriends(token)
         }
     }, [])
 
     return (
         <GlobalContext.Provider
-            value={{ user, setUser }}
+            value={{ user, setUser, friends, setFriends }}
         >
             {children}
         </GlobalContext.Provider>

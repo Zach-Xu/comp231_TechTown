@@ -82,9 +82,8 @@ const authUser = asyncHandler(async (req, res) => {
 })
 
 const getTokenUser = asyncHandler(async (req, res) => {
-    console.log('req users', req.user);
     if (req.user) {
-        res.status(200).json(req.user)
+        return res.status(200).json(req.user)
     }
     res.status(400)
     throw new Error('User not found')

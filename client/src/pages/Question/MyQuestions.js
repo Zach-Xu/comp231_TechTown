@@ -11,7 +11,6 @@ export default function MyQuestions() {
             const { data } = await axios(`${baseURL}/api/posts`)
             setQuestions(data)
         }
-
         getMyQuestions()
     }, [])
 

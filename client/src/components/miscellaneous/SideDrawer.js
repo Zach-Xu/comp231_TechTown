@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { styled, useTheme } from "@mui/material/styles";
@@ -22,7 +22,9 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
+import { GlobalState } from '../../context/GlobalProvider';
+import { getFriend } from '../../utils/utlis'
+import MyAvatar from './MyAvatar';
 
 const drawerWidth = 240;
 
@@ -38,7 +40,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function SideDrawer({ open, handleDrawerClose }) {
 
     const theme = useTheme();
-
 
     const handleClick = () => {
 
@@ -60,11 +61,11 @@ export default function SideDrawer({ open, handleDrawerClose }) {
         setExpandF(!expandG)
     }
 
-
-    const [friends, setFriends] = useState([])
+    const { user, friends } = GlobalState()
 
     const [groups, setGroups] = useState([])
 
+    console.log('friends', friends);
 
     return (
         <Drawer
@@ -143,24 +144,23 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                     <ListItemText primary="Friends" />
                     {expandF ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
+
                 {/* Friend List */}
                 <Collapse in={expandF} timeout="auto" unmountOnExit>
-
                     <List component="div" disablePadding>
                         <ListItemButton sx={{ pl: 4 }}>
                             <ListItemIcon>
                                 <PersonAddIcon />
                             </ListItemIcon>
                             <Link to='/addfriend'> <ListItemText primary="Add a friend" /></Link>
-
                         </ListItemButton>
                         {
-                            friends.length > 0 && friends.map(friend => (
-                                <ListItemButton sx={{ pl: 4 }}>
+                            user && friends.length > 0 && friends.map(friend => (
+                                <ListItemButton sx={{ pl: 4 }} key={friend._id}>
                                     <ListItemIcon>
-                                        <StarBorder />
+                                        <MyAvatar username={getFriend(user, friend.users).username} width='30px' height='30px' />
                                     </ListItemIcon>
-                                    <ListItemText primary={friend.username} />
+                                    <ListItemText primary={getFriend(user, friend.users).username} />
                                 </ListItemButton>
                             ))
                         }

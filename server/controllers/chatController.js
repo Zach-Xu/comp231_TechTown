@@ -3,12 +3,13 @@ const Chat = require('../models/chatModel')
 const User = require('../models/userModel')
 
 
-const getChats = asyncHandler(async (req, res) => {
+const getOneOnOneChats = asyncHandler(async (req, res) => {
+    console.log('req user', req.user);
     let chats
     const { userId } = req.query
-    // get all chats for a user
+    // get all one on one chats for a user
     if (!userId) {
-        chats = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
+        chats = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } }, isGroupChat: false })
             .populate('users', '-password')
             .sort({ updatedAt: -1 })
         res.status(200).json(chats)
@@ -38,10 +39,17 @@ const getChats = asyncHandler(async (req, res) => {
             }
             newChat = await Chat.create(newChat)
             // get full chat info
-            newChat = Chat.findById(newChat._id).populate('users', '-password')
+            newChat = await Chat.findById(newChat._id).populate('users', '-password')
             res.status(201).json(newChat)
         }
     }
+})
+
+const getGroupChats = asyncHandler(async (req, res) => {
+    const chats = await Chat.find({ users: { $elemMatch: { $eq: req.user._id } }, isGroupChat: true })
+        .populate('users', '-password')
+        .sort({ updatedAt: -1 })
+    res.status(200).json(chats)
 })
 
 const createGroupChat = asyncHandler(async (req, res) => {
@@ -83,4 +91,4 @@ const renameGroup = asyncHandler(async (req, res) => {
     res.status(200).json(groupChat)
 })
 
-module.exports = { getChats, createGroupChat, renameGroup }
+module.exports = { getOneOnOneChats, getGroupChats, createGroupChat, renameGroup }

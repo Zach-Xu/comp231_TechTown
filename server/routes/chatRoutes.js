@@ -1,12 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const { protect } = require('../middlewares/authMiddleware')
-const { getChats, createGroupChat, renameGroup } = require('../controllers/chatController')
+const { getOneOnOneChats, getGroupChats, createGroupChat, renameGroup } = require('../controllers/chatController')
 
-// @route   GET api/chats[?userId=]
-// @desc    Get all chats or a chat with a specific user
+// @route   GET api/chats/oneonone[?userId=]
+// @desc    Get all one one one chats or chat with a specific user
 // @access  Private
-router.get('/', protect, getChats)
+router.get('/oneonone', protect, getOneOnOneChats)
+
+// @route   GET api/chats/group
+// @desc    Get all group chats
+// @access  Private
+router.get('/group', protect, getGroupChats)
+
+
 
 // @route   POST api/chats
 // @desc    Create a group chat
