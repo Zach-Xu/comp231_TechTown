@@ -4,8 +4,24 @@ const { generateToken } = require('../utils/utils')
 
 
 const getAllUsers = asyncHandler(async (req, res) => {
-    // exclude password
-    const users = await User.find({}).select('-password')
+    let users
+    // if search keyword provided
+    const { search } = req.query
+    if (search) {
+        users = await User.find({
+            $or: [
+                {
+                    username: { $regex: new RegExp(search, 'i') }
+                },
+                {
+                    email: { $regex: new RegExp(search, 'i') }
+                }
+            ]
+        }).find({ _id: { $ne: req.user._id } }).select('-password')
+    } else {
+        // exclude password
+        users = await User.find({}).select('-password')
+    }
     res.send(users)
 })
 

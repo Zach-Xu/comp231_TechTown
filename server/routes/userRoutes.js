@@ -5,8 +5,8 @@ const { protect } = require('../middlewares/authMiddleware')
 
 // @route   GET api/users
 // @desc    Get all users
-// @access  Public
-router.get('/', getAllUsers)
+// @access  Private
+router.get('/', protect, getAllUsers)
 
 // @route   POST api/users
 // @desc    Register user
