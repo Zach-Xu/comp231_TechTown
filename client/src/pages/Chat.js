@@ -8,24 +8,55 @@ import ScrollableChat from '../components/miscellaneous/ScrollableChat'
 import { TextField, Button } from '@mui/material/';
 import { toast } from 'react-toastify'
 import SendIcon from '@mui/icons-material/Send';
+import io from 'socket.io-client'
+import { GlobalState } from '../context/GlobalProvider'
 
+
+let socket
 
 export default function Chat() {
     const token = localStorage.getItem('techTownToken')
     const config = getAuthConfig(token)
+
+    const { user } = GlobalState()
 
     const { chatId } = useParams()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('')
 
     useEffect(() => {
+        socket = io(baseURL)
+        if (user) {
+            socket.emit('join own room', user._id)
+        }
+    }, [user])
+
+    useEffect(() => {
         getMessages()
     }, [chatId])
+
+
+    useEffect(() => {
+        const listener = (newMessage) => {
+            console.log('chatId', chatId);
+            console.log('msg ChatId', newMessage.chat._id);
+
+            if (!chatId || chatId !== newMessage.chat._id) {
+                // give notification
+            } else {
+                setMessages(oldMessages => [...oldMessages, newMessage])
+            }
+        }
+        socket.on('receive message', listener)
+        return () => socket.removeListener('receive message', listener);
+    }, [socket, chatId])
 
     const getMessages = async () => {
         try {
             const { data } = await axios.get(`${baseURL}/api/messages/${chatId}`, config)
             setMessages(data)
+
+            socket.emit('join chat', chatId)
         } catch (error) {
             toast.error('Fail to fetch messages, try again!', {
                 position: toast.POSITION.BOTTOM_CENTER
@@ -35,8 +66,6 @@ export default function Chat() {
 
     const typingHandler = (e) => {
         setMessage(e.target.value)
-
-        // typing indicator logic
     }
 
     const handleKeyDown = (e) => {
@@ -51,6 +80,9 @@ export default function Chat() {
                 content: message,
                 chatId
             }, config)
+
+            socket.emit('send message', data)
+
             setMessage('')
             setMessages([...messages, data])
         } catch (error) {
@@ -59,7 +91,6 @@ export default function Chat() {
             })
         }
     }
-
 
     return (
         <Box sx={{ width: '100%', p: '2rem 6rem' }}>

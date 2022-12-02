@@ -31,7 +31,6 @@ export default function GlobalProvider({ children }) {
         const config = getAuthConfig(token)
         try {
             const { data } = await axios.get(`${baseURL}/api/chats/oneonone`, config)
-            console.log('frends', data);
             setFriends(data)
         } catch (error) {
             setFriends([])

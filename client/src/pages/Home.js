@@ -81,7 +81,7 @@ export default function Home() {
             <CssBaseline />
             <AppBar position="fixed" open={open} sx={{ bgcolor: '#343a40', borderBottom: '1px solid #17a2b8' }}>
                 <Toolbar>
-                    <NavBar handleDrawerOpen={handleDrawerOpen} open={open} />
+                    <NavBar handleDrawerOpen={handleDrawerOpen} open={open} setOpen={setOpen} />
                 </Toolbar>
             </AppBar>
             {

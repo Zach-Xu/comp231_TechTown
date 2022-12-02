@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from "@mui/material/Toolbar";
 
-export default function NavBar({ handleDrawerOpen, open }) {
+export default function NavBar({ handleDrawerOpen, open, setOpen }) {
 
     const { user, setUser } = GlobalState()
 
@@ -15,11 +15,10 @@ export default function NavBar({ handleDrawerOpen, open }) {
 
     const logout = () => {
         localStorage.removeItem('techTownToken')
+        setOpen(false)
         setUser()
         navigate('/')
     }
-
-    console.log('contextuser', user);
 
     return (
         <Toolbar className='navbar bg-dark' sx={{ d: 'flex', justifyContent: 'space-between' }}>

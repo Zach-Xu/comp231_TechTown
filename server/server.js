@@ -5,7 +5,6 @@ const app = express()
 const connectDB = require('./config/db')
 connectDB()
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -21,7 +20,6 @@ app.get('/', (req, res) => {
 })
 
 //import routes
-
 const userRouter = require('./routes/userRoutes')
 const postRouter = require('./routes/postRoutes')
 const categoryRouter = require('./routes/categoryRoutes')
@@ -36,6 +34,38 @@ app.use('/api/messages', messageRouter)
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+})
+
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: ['http://localhost:3000']
+    }
+})
+
+io.on('connection', socket => {
+    socket.on('join own room', (userId) => {
+        socket.join(userId)
+        console.log(`User joined room ${userId}`);
+        socket.emit('connected')
+    })
+
+    socket.on('join chat', (chatId) => {
+        socket.join(chatId)
+        // console.log(`User joined room ${chatId}`);
+    })
+
+    socket.on('send message', (message) => {
+        const { chat } = message
+        if (!chat) {
+            return console.log('Invalid message data');
+        }
+        // send message to everyone except the sender
+        chat.users.forEach(user => {
+            if (user == message.sender._id) return
+            socket.in(user).emit('receive message', message)
+        });
+    })
 })
