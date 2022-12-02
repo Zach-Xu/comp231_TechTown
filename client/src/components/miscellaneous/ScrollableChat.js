@@ -1,6 +1,6 @@
 import React from 'react'
 import { GlobalState } from '../../context/GlobalProvider'
-import { isSameSenderMargin, isSameUser } from '../../utils/utlis'
+import { isSanderMargin } from '../../utils/utlis'
 
 export default function ScrollableChat({ messages }) {
 
@@ -9,17 +9,17 @@ export default function ScrollableChat({ messages }) {
     return (
         <div style={{ overflowX: "hidden", overflowY: "auto" }}>
             {
-                messages && messages.map((msg, i) => (
+                messages && messages.map(msg => (
                     <div style={{ display: "flex" }} key={msg._id}>
                         <span
                             style={{
                                 backgroundColor: `${msg.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
                                     }`,
-                                marginLeft: isSameSenderMargin(messages, msg, i, user._id),
-                                marginTop: isSameUser(messages, msg, i, user._id) ? 3 : 10,
+                                marginLeft: isSanderMargin(msg, user._id),
+                                marginTop: '8px',
                                 borderRadius: "20px",
                                 padding: "5px 15px",
-                                maxWidth: "75%",
+                                maxWidth: "50%",
                             }}
                         >
                             {msg.content}
