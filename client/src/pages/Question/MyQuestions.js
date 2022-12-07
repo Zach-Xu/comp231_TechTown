@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { baseURL } from '../../config/env'
 import { getAuthConfig } from '../../utils/utlis'
@@ -77,7 +78,9 @@ export default function MyQuestions() {
                         {questions.map((question) => (
                             <StyledTableRow key={question._id}>
                                 <StyledTableCell component="th" scope="row">
-                                    {question.title}
+                                    <Link to={`/question/${question._id}`}>
+                                        {question.title}
+                                    </Link>
                                 </StyledTableCell>
                                 <StyledTableCell align="left">{question.category}</StyledTableCell>
                                 <StyledTableCell align="left">{moment(question.createdDate).format('YYYY-MM-DD')}</StyledTableCell>

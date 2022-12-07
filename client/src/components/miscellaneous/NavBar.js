@@ -35,7 +35,7 @@ export default function NavBar({ handleDrawerOpen, open, setOpen }) {
                     </IconButton>
                 }
                 <h2>
-                    <Link to={user ? '/posts' : '/'}>
+                    <Link to={user ? '/questions' : '/'}>
                         COMP231 Tech Town
                     </Link>
                 </h2>

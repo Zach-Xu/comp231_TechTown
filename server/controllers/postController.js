@@ -6,6 +6,15 @@ const getAllPosts = asyncHandler(async (req, res) => {
     res.json(posts)
 })
 
+const getPostById = asyncHandler(async (req, res) => {
+    const { postId } = req.params
+    if (!postId) {
+        res.status(400)
+        throw new Error('Unknown post id')
+    }
+    const post = await Post.findById(postId).populate('user', '-password')
+    res.status(200).json(post)
+})
 
 const createPost = asyncHandler(async (req, res) => {
     const { title, content, category } = req.body
@@ -77,4 +86,4 @@ const deletePost = asyncHandler(async (req, res) => {
     res.status(200).json(post)
 })
 
-module.exports = { getAllPosts, createPost, getPostsForUser, updateContentAndCategory, deletePost }
+module.exports = { getAllPosts, createPost, getPostById, getPostsForUser, updateContentAndCategory, deletePost }

@@ -40,7 +40,7 @@ export default function Questions() {
                             <List>
                                 {
                                     question[1].map(q => (
-                                        <ListItem ListItem disablePadding >
+                                        <ListItem disablePadding key={q._id}>
                                             <Link to={`/question/${q._id}`}>
                                                 <ListItemText primary={q.title} />
                                             </Link>

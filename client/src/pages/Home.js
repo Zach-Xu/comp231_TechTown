@@ -10,6 +10,7 @@ import NavBar from '../components/miscellaneous/NavBar';
 import Chat from '../pages/Chat'
 import Questions from '../pages/Question/Questions'
 import Question from '../pages/Question/Question'
+import Detail from '../pages/Question/Detail'
 import Auth from '../pages/Auth'
 import Landing from '../pages/Landing'
 import MyQuestions from '../pages/Question/MyQuestions'
@@ -92,6 +93,7 @@ export default function Home() {
                 <Routes>
                     <Route path='/' element={<Landing />} />
                     <Route path='/questions' element={<Questions />} />
+                    <Route path='/question/:questionId' element={<Detail />} />
                     <Route path='/chat/:chatId' element={<Chat />} />
                     <Route path='/question' element={<Question />} />
                     <Route path='/myquestions' element={<MyQuestions />} />
