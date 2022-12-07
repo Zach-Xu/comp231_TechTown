@@ -28,6 +28,11 @@ const createPost = asyncHandler(async (req, res) => {
     throw new Error('Fail to create the post')
 })
 
+const getPostsForUser = asyncHandler(async (req, res) => {
+    const posts = await Post.find({ user: req.user._id })
+    res.status(200).json(posts)
+})
+
 const updateContentAndCategory = asyncHandler(async (req, res) => {
     const { postId } = req.params
     const { content, category } = req.body
@@ -72,4 +77,4 @@ const deletePost = asyncHandler(async (req, res) => {
     res.status(200).json(post)
 })
 
-module.exports = { getAllPosts, createPost, updateContentAndCategory, deletePost }
+module.exports = { getAllPosts, createPost, getPostsForUser, updateContentAndCategory, deletePost }

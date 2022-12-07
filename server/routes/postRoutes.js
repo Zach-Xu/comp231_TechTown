@@ -1,12 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const { getAllPosts, createPost, updateContentAndCategory, deletePost } = require('../controllers/postController')
+const { getAllPosts, createPost, getPostsForUser, updateContentAndCategory, deletePost } = require('../controllers/postController')
 const { protect } = require('../middlewares/authMiddleware')
 
 // @route   GET api/posts
 // @desc    Get all posts
 // @access  Public
 router.get('/', getAllPosts)
+
+
+// @route   GET api/posts/myposts
+// @desc    Get user's posts
+// @access  Private
+router.get('/myposts', protect, getPostsForUser)
 
 // @route   POST api/posts
 // @desc    Create a post

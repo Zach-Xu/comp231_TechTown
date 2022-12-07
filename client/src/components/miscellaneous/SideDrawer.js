@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
@@ -8,7 +8,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
+import { ListItemButton, ListItem } from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
@@ -154,14 +154,14 @@ export default function SideDrawer({ open, handleDrawerClose }) {
                         </ListItemButton>
                         {
                             user && friends.length > 0 && friends.map(friend => (
-                                <Link to={`/chat/${friend._id}`} key={friend._id}>
-                                    <ListItemButton sx={{ pl: 4 }} >
-                                        <ListItemIcon>
-                                            <MyAvatar username={getFriend(user, friend.users).username} width='30px' height='30px' />
-                                        </ListItemIcon>
-                                        <ListItemText primary={getFriend(user, friend.users).username} />
-                                    </ListItemButton>
-                                </Link>
+
+                                <ListItemButton component={NavLink} to={`/chat/${friend._id}`} key={friend._id} sx={{ pl: 4 }} >
+                                    <ListItemIcon>
+                                        <MyAvatar username={getFriend(user, friend.users).username} width='30px' height='30px' />
+                                    </ListItemIcon>
+                                    <ListItemText primary={getFriend(user, friend.users).username} />
+                                </ListItemButton>
+
                             ))
                         }
 

@@ -495,10 +495,14 @@ i {
   width: 80%;
 }
 
+.active {
+  background-color: lightgray !important;
+}
+
 .messages {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: hidden;
   scrollbar-width: none;
 }
 
