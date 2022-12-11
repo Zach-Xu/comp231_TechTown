@@ -91,14 +91,15 @@ export default function Home() {
             <Main open={open} user={user}>
                 <DrawerHeader />
                 <Routes>
-                    <Route path='/' element={<Landing />} />
+                    <Route path='/' element={user ? <Questions /> : <Landing />} />
                     <Route path='/questions' element={<Questions />} />
                     <Route path='/question/:questionId' element={<Detail />} />
-                    <Route path='/chat/:chatId' element={<Chat />} />
-                    <Route path='/question' element={<Question />} />
-                    <Route path='/myquestions' element={<MyQuestions />} />
-                    <Route path='/addfriend' element={<AddFriend />} />
-                    <Route path='*' element={<Auth />} />
+                    <Route path='/chat/:chatId' element={user ? <Chat /> : <Auth />} />
+                    <Route path='/question' element={user ? <Question /> : <Auth />} />
+                    <Route path='/myquestions' element={user ? <MyQuestions /> : <Auth />} />
+                    <Route path='/addfriend' element={user ? <AddFriend /> : <Auth />} />
+                    <Route path='/auth' element={user ? <MyQuestions /> : <Auth />} />
+                    <Route path='*' element={<Questions />} />
                 </Routes>
             </Main>
         </Box>

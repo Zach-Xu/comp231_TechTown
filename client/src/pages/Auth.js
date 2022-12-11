@@ -17,7 +17,7 @@ export default function Auth() {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '91vh', justifyContent: 'center' }}>
             <TabContext value={value}>
                 <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     <TabList onChange={handleChange} aria-label="lab API tabs example" centered>

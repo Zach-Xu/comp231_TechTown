@@ -50,8 +50,8 @@ export default function NavBar({ handleDrawerOpen, open, setOpen }) {
                     </>
                     :
                     <>
-                        <li><Link to="/signup">Register</Link></li>
-                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/auth">Register</Link></li>
+                        <li><Link to="/auth">Login</Link></li>
                     </>}
             </ul>
         </Toolbar>
