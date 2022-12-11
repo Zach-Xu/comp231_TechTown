@@ -32,6 +32,18 @@ app.use('/api/categories', categoryRouter)
 app.use('/api/chats', chatRouter)
 app.use('/api/messages', messageRouter)
 
+
+app.use(express.static(path.join(__dirname, "../client/build")));
+app.get("*", function (_, res) {
+    res.sendFile(
+        path.join(__dirname, "../client/build/index.html"),
+        function (err) {
+            res.status(500).send(err);
+        }
+    );
+});
+
+
 const PORT = process.env.PORT || 5000
 
 const server = app.listen(PORT, () => {

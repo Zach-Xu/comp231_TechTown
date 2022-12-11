@@ -1,0 +1,21 @@
+{
+  "name": "tech_town",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zach-Xu/comp231_TechTown.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zach-Xu/comp231_TechTown/issues"
+  },
+  "homepage": "https://github.com/Zach-Xu/comp231_TechTown#readme"
+}
