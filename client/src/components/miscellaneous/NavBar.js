@@ -41,7 +41,7 @@ export default function NavBar({ handleDrawerOpen, open, setOpen }) {
                 </h2>
             </div>
             <ul>
-                <li><Link to='/questions'>Posts</Link></li>
+                <li><Link to='/questions'>Questions</Link></li>
                 {user ?
                     <>
                         <li><Link to="/question">Ask Question</Link></li>

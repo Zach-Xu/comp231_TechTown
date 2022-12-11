@@ -70,10 +70,9 @@ export default function SideDrawer({ open, handleDrawerClose }) {
             sx={{
                 width: drawerWidth,
                 flexShrink: 0,
-                "& .MuiDrawer-paper": {
+                '& .MuiDrawer-paper': {
                     width: drawerWidth,
-                    boxSizing: "border-box"
-                }
+                },
             }}
             variant="persistent"
             anchor="left"

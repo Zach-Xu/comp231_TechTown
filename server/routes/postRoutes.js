@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getAllPosts, getPostById, createPost, getPostsForUser, updateContentAndCategory, deletePost } = require('../controllers/postController')
+const { getAllPosts, getPostById, createPost, answerPost, getPostsForUser, updateContentAndCategory, deletePost } = require('../controllers/postController')
 const { protect } = require('../middlewares/authMiddleware')
 
 // @route   GET api/posts
@@ -22,6 +22,11 @@ router.get('/myposts', protect, getPostsForUser)
 // @desc    Create a post
 // @access  Private
 router.post('/', protect, createPost)
+
+// @route   POST api/posts/answer/:postId
+// @desc    Create an answer
+// @access  Private
+router.post('/answer/:postId', protect, answerPost)
 
 // @route   Patch api/posts/:postId
 // @desc    Partially update a post

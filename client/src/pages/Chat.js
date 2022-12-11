@@ -38,8 +38,6 @@ export default function Chat() {
 
     useEffect(() => {
         const listener = (newMessage) => {
-            console.log('chatId', chatId);
-            console.log('msg ChatId', newMessage.chat._id);
 
             if (!chatId || chatId !== newMessage.chat._id) {
                 // give notification

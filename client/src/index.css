@@ -615,6 +615,64 @@ i {
   cursor: pointer;
 }
 
+.header-comment {
+  margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.comments ul {
+  margin-top: 2rem;
+}
+
+.answer {
+  margin: 0 24px;
+}
+
+.form-comment textarea {
+  width: 100%;
+  padding: 0.4rem;
+}
+
+.detail-container .comments {
+  margin-top: 0.8rem;
+}
+
+.detail-container .comments ul {
+  margin-left: 0;
+  color: #fff;
+}
+
+.comment {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.comment::after {
+  content: '';
+  display: block;
+  border-bottom: 0.2px solid lightgrey;
+}
+
+.comment p {
+  margin-top: 0.6rem;
+}
+
+.comment div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment .edit {
+  position: absolute;
+  right: 0;
+  bottom: 1rem;
+}
+
+.form-comment textarea {
+  width: 100%;
+  padding: 0.4rem;
+}
+
 @media (max-width: 700px) {
   .navbar {
     display: block;
